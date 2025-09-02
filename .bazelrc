@@ -1,0 +1,87 @@
+# MODEL_X Bazel configuration file
+
+# -------------------------------
+# ------| CONFIG OPTIONS |-------
+# -------------------------------
+#
+# Compiler options:
+#   clang: Use clang when building c++ code.
+#
+# Other build options:
+#   libc++:  Link against libc++ instead of stdlibc++
+#   asan:    Build with the clang address sanitizer
+#   msan:    Build with the clang memory sanitizer
+#   ubsan:   Build with the clang undefined behavior sanitizer
+#   dbg:     Build with debug info
+
+# Default build options
+build --action_env=BAZEL_CXXOPTS="-std=c++26"
+build --repo_env=CC=clang
+
+# This file tries to group and simplify build options for MODEL_X
+# Allow builds using `LLVM C++ Standard Library (libc++)` as a linker library
+build:libc++ --action_env=CC
+build:libc++ --action_env=CXX
+build:libc++ --action_env=CXXFLAGS=-stdlib=libc++
+build:libc++ --action_env=PATH
+build:libc++ --define force_libcpp=enabled
+build:libc++ --linkopt -fuse-ld=lld
+
+# By default, build MX in C++ 26 mode.
+build:linux --cxxopt=-std=c++26
+build:linux --host_cxxopt=-std=c++26
+build:windows --cxxopt=/std:c++26
+build:windows --host_cxxopt=/std:c++26
+build:macos --cxxopt=-std=c++26
+build:macos --host_cxxopt=-std=c++26
+
+# On windows, we still link everything into a single DLL.
+build:windows --config=monolithic
+
+# On linux, we dynamically link small amount of kernels
+build:linux --config=dynamic_kernels
+
+# Make sure to include as little of windows.h as possible
+build:windows --copt=-DWIN32_LEAN_AND_MEAN
+build:windows --host_copt=-DWIN32_LEAN_AND_MEAN
+build:windows --copt=-DNOGDI
+build:windows --host_copt=-DNOGDI
+
+# Debug config
+
+build:dbg -c dbg
+
+# run @hedron_compile_commands
+# run @hedron_compile_commands//:refresh_all
+
+
+# Address sanitizer
+# CC=clang bazel build --config asan
+build:asan --strip=never
+build:asan --copt -fsanitize=address
+build:asan --copt -DADDRESS_SANITIZER
+build:asan --copt -g
+build:asan --copt -O3
+build:asan --copt -fno-omit-frame-pointer
+build:asan --linkopt -fsanitize=address
+
+# Memory sanitizer
+# CC=clang bazel build --config msan
+build:msan --strip=never
+build:msan --copt -fsanitize=memory
+build:msan --copt -DMEMORY_SANITIZER
+build:msan --copt -g
+build:msan --copt -O3
+build:msan --copt -fno-omit-frame-pointer
+build:msan --linkopt -fsanitize=memory
+
+# Undefined Behavior Sanitizer
+# CC=clang bazel build --config ubsan
+build:ubsan --strip=never
+build:ubsan --copt -fsanitize=undefined
+build:ubsan --copt -DUNDEFINED_BEHAVIOR_SANITIZER
+build:ubsan --copt -g
+build:ubsan --copt -O3
+build:ubsan --copt -fno-omit-frame-pointer
+build:ubsan --linkopt -fsanitize=undefined
+build:ubsan --linkopt -lubsan
