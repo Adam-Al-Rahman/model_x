@@ -48,12 +48,7 @@ build:windows --copt=-DNOGDI
 build:windows --host_copt=-DNOGDI
 
 # Debug config
-
 build:dbg -c dbg
-
-# run @hedron_compile_commands
-# run @hedron_compile_commands//:refresh_all
-
 
 # Address sanitizer
 # CC=clang bazel build --config asan
@@ -85,3 +80,8 @@ build:ubsan --copt -O3
 build:ubsan --copt -fno-omit-frame-pointer
 build:ubsan --linkopt -fsanitize=undefined
 build:ubsan --linkopt -lubsan
+
+# Dev Tooling
+# Refresh compile_commands.json for IDEs
+# run: bazel run @hedron_compile_commands//:refresh_all
+

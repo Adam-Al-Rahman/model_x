@@ -11,5 +11,5 @@ cc_binary(
     name = "main",
     srcs = ["main.cc"],
     visibility = ["//visibility:public"],
-    deps = ["@libtorch//:torch"],
+    deps = ["@libtorch//:torch", "@tensorboard_logger"],
 )
