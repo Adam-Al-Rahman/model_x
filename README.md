@@ -10,3 +10,8 @@ Simple large language model.
 - cuDNN FULL: [cuDNN  Archive](https://developer.nvidia.com/cudnn-archive)
 - cuSPARSELt: [cuSPARSELt Archive](https://developer.nvidia.com/cusparselt-archive)
 - `sudo apt install ibverbs-providers rdma-core librdmacm-dev`
+
+
+## Execution
+
+For tensorboard_logger: `bazel run //src:main -- $(pwd)/[folder_name]/[file_name]`

@@ -1,0 +1,9 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "tb_log",
+    srcs = ["tensorboard/logger.cc"],
+    hdrs = ["tensorboard/logger.h"],
+    deps = ["@tensorboard_logger"],
+    visibility = ["//visibility:public"],
+)
