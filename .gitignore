@@ -1,3 +1,6 @@
+# MODEL_X
+_*_mx.*
+
 ### Added by Hedron's Bazel Compile Commands Extractor: https://github.com/hedronvision/bazel-compile-commands-extractor
 # The external link: Differs on Windows vs macOS/Linux, so we can't check it in. The pattern needs to not have a trailing / because it's a symlink on macOS/Linux.
 /external
@@ -11,7 +14,6 @@ compile_commands.json
 ### Added by Hedron's Bazel Compile Commands Extractor: https://github.com/hedronvision/bazel-compile-commands-extractor
 # Compiled output -> don't check in
 /compile_commands.json
-
 
 ### Synk Commandline
 snyk
@@ -37,3 +39,6 @@ __pycache__/
 
 # Vscode
 .vscode/
+
+# datasets
+datasets/

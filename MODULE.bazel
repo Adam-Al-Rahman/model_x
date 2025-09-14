@@ -7,6 +7,8 @@ bazel_dep(name = "bazel_skylib", version = "1.8.1")
 
 bazel_dep(name = "googletest", version = "1.17.0")
 bazel_dep(name = "abseil-cpp", version = "20250814.0")
+bazel_dep(name = "re2", version = "2025-08-12")
+bazel_dep(name = "rules_python", version = "1.6.3")
 
 # Add Third Party Dependencies
 bazel_dep(name = "rules_cuda")
@@ -26,6 +28,14 @@ use_repo(libtorch_extension, "libtorch")
 
 # matplot_pp_extention = use_extension("//third_party/matplotplusplus:workspace.bzl", "matplot_pp_extention")
 # use_repo(matplot_pp_extention, "matplot_pp")
+
+# Python setup
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = "3.13", is_default=True)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(hub_name = "pypi", download_only = True, python_version = "3.13", requirements_lock = "//src/py_modules:requirements_lock.txt",)
+use_repo(pip, "pypi")
 
 bazel_dep(name = "tensorboard_logger")
 git_override(

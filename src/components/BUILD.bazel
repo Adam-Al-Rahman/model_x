@@ -7,3 +7,20 @@ cc_library(
     deps = ["@tensorboard_logger"],
     visibility = ["//visibility:public"],
 )
+
+cc_library(
+    name = "tokenizers",
+    srcs = ["tokenizers/tokenizers.cc"],
+		hdrs = [
+			"tokenizers/tokenizers.h",
+			"tokenizers/byte_pair.h"
+		],
+    visibility = ["//visibility:public"],
+		deps = [
+			"@abseil-cpp//absl/container:flat_hash_map",
+			"@abseil-cpp//absl/hash:hash",
+			"@abseil-cpp//absl/strings",
+			"@abseil-cpp//absl/memory",
+			"@re2//:re2"
+		]
+)
