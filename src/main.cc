@@ -19,8 +19,8 @@ int main(int argc, char **argv) {
   device = torch::Device(torch::kMPS);
 #endif
 
-  const std::u8string text =
-      u8"Trapped-ion research at QSA is rapidly advancing scalable, stable "
+  const std::string text =
+      "Trapped-ion research at QSA is rapidly advancing scalable, stable "
       "quantum computing 🧬⚡, with the Enchilada Trap 🫔 designed at Sandia "
       "National Labs enabling storage of up to 200 ions 🧪, reducing RF power "
       "dissipation 🔋⚡, and connecting multiple operational zones 🔗; "
@@ -37,6 +37,5 @@ int main(int argc, char **argv) {
       "more efficient, reliable, interactive, and powerful 🚀💻✨.";
 
   auto text_encoded =
-      model_x::src::component::tokenizers(text, "byte_pair", 500);
-  std::cout << text_encoded << std::endl;
+      model_x::src::component::tokenizers(text, "byte_pair", 256);
 }
